@@ -9,38 +9,266 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutUniversityRouteImport } from './routes/about.university'
+import { Route as AboutGibiGubayeRouteImport } from './routes/about.gibi-gubaye'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedRegisterRouteImport } from './routes/_authenticated/register'
+import { Route as AuthenticatedNoticesRouteImport } from './routes/_authenticated/notices'
+import { Route as AuthenticatedMezmurRouteImport } from './routes/_authenticated/mezmur'
+import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
+import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
+import { Route as AuthenticatedFeedbackRouteImport } from './routes/_authenticated/feedback'
+import { Route as AuthenticatedDonateRouteImport } from './routes/_authenticated/donate'
+import { Route as AuthenticatedDepartmentsRouteImport } from './routes/_authenticated/departments'
+import { Route as AuthenticatedCasesRouteImport } from './routes/_authenticated/cases'
+import { Route as AuthenticatedDepartmentsIndexRouteImport } from './routes/_authenticated/departments.index'
+import { Route as AuthenticatedDepartmentsSlugRouteImport } from './routes/_authenticated/departments.$slug'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutUniversityRoute = AboutUniversityRouteImport.update({
+  id: '/university',
+  path: '/university',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutGibiGubayeRoute = AboutGibiGubayeRouteImport.update({
+  id: '/gibi-gubaye',
+  path: '/gibi-gubaye',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRegisterRoute = AuthenticatedRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNoticesRoute = AuthenticatedNoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMezmurRoute = AuthenticatedMezmurRouteImport.update({
+  id: '/mezmur',
+  path: '/mezmur',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFeedbackRoute = AuthenticatedFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDonateRoute = AuthenticatedDonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDepartmentsRoute =
+  AuthenticatedDepartmentsRouteImport.update({
+    id: '/departments',
+    path: '/departments',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCasesRoute = AuthenticatedCasesRouteImport.update({
+  id: '/cases',
+  path: '/cases',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDepartmentsIndexRoute =
+  AuthenticatedDepartmentsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDepartmentsRoute,
+  } as any)
+const AuthenticatedDepartmentsSlugRoute =
+  AuthenticatedDepartmentsSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => AuthenticatedDepartmentsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/cases': typeof AuthenticatedCasesRoute
+  '/departments': typeof AuthenticatedDepartmentsRouteWithChildren
+  '/donate': typeof AuthenticatedDonateRoute
+  '/feedback': typeof AuthenticatedFeedbackRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/library': typeof AuthenticatedLibraryRoute
+  '/mezmur': typeof AuthenticatedMezmurRoute
+  '/notices': typeof AuthenticatedNoticesRoute
+  '/register': typeof AuthenticatedRegisterRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
+  '/about/university': typeof AboutUniversityRoute
+  '/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
+  '/departments/': typeof AuthenticatedDepartmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/cases': typeof AuthenticatedCasesRoute
+  '/donate': typeof AuthenticatedDonateRoute
+  '/feedback': typeof AuthenticatedFeedbackRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/library': typeof AuthenticatedLibraryRoute
+  '/mezmur': typeof AuthenticatedMezmurRoute
+  '/notices': typeof AuthenticatedNoticesRoute
+  '/register': typeof AuthenticatedRegisterRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
+  '/about/university': typeof AboutUniversityRoute
+  '/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
+  '/departments': typeof AuthenticatedDepartmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/cases': typeof AuthenticatedCasesRoute
+  '/_authenticated/departments': typeof AuthenticatedDepartmentsRouteWithChildren
+  '/_authenticated/donate': typeof AuthenticatedDonateRoute
+  '/_authenticated/feedback': typeof AuthenticatedFeedbackRoute
+  '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/library': typeof AuthenticatedLibraryRoute
+  '/_authenticated/mezmur': typeof AuthenticatedMezmurRoute
+  '/_authenticated/notices': typeof AuthenticatedNoticesRoute
+  '/_authenticated/register': typeof AuthenticatedRegisterRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
+  '/about/university': typeof AboutUniversityRoute
+  '/_authenticated/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
+  '/_authenticated/departments/': typeof AuthenticatedDepartmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/cases'
+    | '/departments'
+    | '/donate'
+    | '/feedback'
+    | '/history'
+    | '/library'
+    | '/mezmur'
+    | '/notices'
+    | '/register'
+    | '/settings'
+    | '/about/gibi-gubaye'
+    | '/about/university'
+    | '/departments/$slug'
+    | '/departments/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/cases'
+    | '/donate'
+    | '/feedback'
+    | '/history'
+    | '/library'
+    | '/mezmur'
+    | '/notices'
+    | '/register'
+    | '/settings'
+    | '/about/gibi-gubaye'
+    | '/about/university'
+    | '/departments/$slug'
+    | '/departments'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/_authenticated/cases'
+    | '/_authenticated/departments'
+    | '/_authenticated/donate'
+    | '/_authenticated/feedback'
+    | '/_authenticated/history'
+    | '/_authenticated/library'
+    | '/_authenticated/mezmur'
+    | '/_authenticated/notices'
+    | '/_authenticated/register'
+    | '/_authenticated/settings'
+    | '/about/gibi-gubaye'
+    | '/about/university'
+    | '/_authenticated/departments/$slug'
+    | '/_authenticated/departments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +276,170 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/university': {
+      id: '/about/university'
+      path: '/university'
+      fullPath: '/about/university'
+      preLoaderRoute: typeof AboutUniversityRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/gibi-gubaye': {
+      id: '/about/gibi-gubaye'
+      path: '/gibi-gubaye'
+      fullPath: '/about/gibi-gubaye'
+      preLoaderRoute: typeof AboutGibiGubayeRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/register': {
+      id: '/_authenticated/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthenticatedRegisterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notices': {
+      id: '/_authenticated/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof AuthenticatedNoticesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mezmur': {
+      id: '/_authenticated/mezmur'
+      path: '/mezmur'
+      fullPath: '/mezmur'
+      preLoaderRoute: typeof AuthenticatedMezmurRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/library': {
+      id: '/_authenticated/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof AuthenticatedLibraryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/history': {
+      id: '/_authenticated/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/feedback': {
+      id: '/_authenticated/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof AuthenticatedFeedbackRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/donate': {
+      id: '/_authenticated/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof AuthenticatedDonateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departments': {
+      id: '/_authenticated/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof AuthenticatedDepartmentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/cases': {
+      id: '/_authenticated/cases'
+      path: '/cases'
+      fullPath: '/cases'
+      preLoaderRoute: typeof AuthenticatedCasesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departments/': {
+      id: '/_authenticated/departments/'
+      path: '/'
+      fullPath: '/departments/'
+      preLoaderRoute: typeof AuthenticatedDepartmentsIndexRouteImport
+      parentRoute: typeof AuthenticatedDepartmentsRoute
+    }
+    '/_authenticated/departments/$slug': {
+      id: '/_authenticated/departments/$slug'
+      path: '/$slug'
+      fullPath: '/departments/$slug'
+      preLoaderRoute: typeof AuthenticatedDepartmentsSlugRouteImport
+      parentRoute: typeof AuthenticatedDepartmentsRoute
+    }
   }
 }
 
+interface AuthenticatedDepartmentsRouteChildren {
+  AuthenticatedDepartmentsSlugRoute: typeof AuthenticatedDepartmentsSlugRoute
+  AuthenticatedDepartmentsIndexRoute: typeof AuthenticatedDepartmentsIndexRoute
+}
+
+const AuthenticatedDepartmentsRouteChildren: AuthenticatedDepartmentsRouteChildren =
+  {
+    AuthenticatedDepartmentsSlugRoute: AuthenticatedDepartmentsSlugRoute,
+    AuthenticatedDepartmentsIndexRoute: AuthenticatedDepartmentsIndexRoute,
+  }
+
+const AuthenticatedDepartmentsRouteWithChildren =
+  AuthenticatedDepartmentsRoute._addFileChildren(
+    AuthenticatedDepartmentsRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCasesRoute: typeof AuthenticatedCasesRoute
+  AuthenticatedDepartmentsRoute: typeof AuthenticatedDepartmentsRouteWithChildren
+  AuthenticatedDonateRoute: typeof AuthenticatedDonateRoute
+  AuthenticatedFeedbackRoute: typeof AuthenticatedFeedbackRoute
+  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
+  AuthenticatedMezmurRoute: typeof AuthenticatedMezmurRoute
+  AuthenticatedNoticesRoute: typeof AuthenticatedNoticesRoute
+  AuthenticatedRegisterRoute: typeof AuthenticatedRegisterRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCasesRoute: AuthenticatedCasesRoute,
+  AuthenticatedDepartmentsRoute: AuthenticatedDepartmentsRouteWithChildren,
+  AuthenticatedDonateRoute: AuthenticatedDonateRoute,
+  AuthenticatedFeedbackRoute: AuthenticatedFeedbackRoute,
+  AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
+  AuthenticatedMezmurRoute: AuthenticatedMezmurRoute,
+  AuthenticatedNoticesRoute: AuthenticatedNoticesRoute,
+  AuthenticatedRegisterRoute: AuthenticatedRegisterRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface AboutRouteChildren {
+  AboutGibiGubayeRoute: typeof AboutGibiGubayeRoute
+  AboutUniversityRoute: typeof AboutUniversityRoute
+}
+
+const AboutRouteChildren: AboutRouteChildren = {
+  AboutGibiGubayeRoute: AboutGibiGubayeRoute,
+  AboutUniversityRoute: AboutUniversityRoute,
+}
+
+const AboutRouteWithChildren = AboutRoute._addFileChildren(AboutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
