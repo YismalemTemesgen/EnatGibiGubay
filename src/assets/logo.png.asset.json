@@ -1,11 +1,11 @@
 {
-  "asset_id": "e7508a3b-fd25-4a48-8d76-2308b1b1e2c5",
-  "content_type": "image/png",
-  "created_at": "2026-06-23T10:57:44Z",
+  "version": 1,
+  "asset_id": "47e8e3ae-0b57-4534-bc58-407c036aa654",
+  "project_id": "833ec2ea-2e92-4a67-84de-4807f6b4b751",
+  "url": "/__l5e/assets-v1/47e8e3ae-0b57-4534-bc58-407c036aa654/gibi-gubaye-logo.png",
+  "r2_key": "a/v1/833ec2ea-2e92-4a67-84de-4807f6b4b751/47e8e3ae-0b57-4534-bc58-407c036aa654/gibi-gubaye-logo.png",
   "original_filename": "gibi-gubaye-logo.png",
-  "project_id": "d2a60243-5897-416c-b332-7300697b7ad1",
-  "r2_key": "a/v1/d2a60243-5897-416c-b332-7300697b7ad1/e7508a3b-fd25-4a48-8d76-2308b1b1e2c5/gibi-gubaye-logo.png",
-  "size": 561164,
-  "url": "/__l5e/assets-v1/e7508a3b-fd25-4a48-8d76-2308b1b1e2c5/gibi-gubaye-logo.png",
-  "version": 1
+  "size": 1404926,
+  "content_type": "image/png",
+  "created_at": "2026-07-08T19:20:45Z"
 }
