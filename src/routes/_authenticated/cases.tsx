@@ -211,8 +211,12 @@ function CasesPage() {
               </Link>
             </Button>
             <Button type="submit" disabled={submitting} size="lg">
-              <Send className="h-4 w-4" />
-              {submitting ? "እየተመዘገበ..." : "አስገባ"}
+              {submitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+              {submitting ? "እየተላከ..." : "አስገባ"}
             </Button>
           </div>
         </form>
