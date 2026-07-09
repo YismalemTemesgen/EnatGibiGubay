@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
-import { ArrowLeft, ShieldCheck, Send } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Send, Loader2 } from "lucide-react";
+import { sendCaseToTelegram } from "@/lib/telegram.functions";
 
 export const Route = createFileRoute("/_authenticated/cases")({
   head: () => ({ meta: [{ title: "ዕቅበተ እምነት — የኬዝ ዝርዝር መመዝገቢያ ፎርም" }] }),
