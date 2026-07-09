@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Trash2 } from "lucide-react";
+import { Trash2, Download } from "lucide-react";
+import { generateIdCardPdf } from "@/lib/generate-id-card";
 
 export const Route = createFileRoute("/_authenticated/register")({
   head: () => ({ meta: [{ title: "አዲስ ተመዝጋቢ — ግቢ ጉባዬ" }] }),
@@ -143,6 +144,21 @@ function RegisterPage() {
       toast.success(existingId ? "ተስተካክሏል" : "ተመዝግቧል");
       if (data) setExistingId(data.id);
       load();
+      if (data) {
+        try {
+          await generateIdCardPdf({
+            id: data.id,
+            full_name: data.full_name,
+            department: data.department,
+            academic_year: data.academic_year,
+            baptism_name: data.baptism_name,
+            phone: data.phone,
+          });
+          toast.success("የመታወቂያ ካርድ PDF ተውርዷል");
+        } catch (err) {
+          toast.error(err instanceof Error ? err.message : "PDF መፍጠር አልተቻለም");
+        }
+      }
     }
   }
 
@@ -213,10 +229,30 @@ function RegisterPage() {
               rows={3}
             />
           </div>
-          <div className="sm:col-span-2 flex gap-2">
+          <div className="sm:col-span-2 flex flex-wrap gap-2">
             <Button type="submit" disabled={saving}>
               {saving ? "..." : existingId ? "አስተካክል" : "መዝግብ"}
             </Button>
+            {existingId && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() =>
+                  generateIdCardPdf({
+                    id: existingId,
+                    full_name: form.full_name,
+                    department: form.department,
+                    academic_year: form.academic_year,
+                    baptism_name: form.baptism_name,
+                    phone: form.phone,
+                  }).catch((err) =>
+                    toast.error(err instanceof Error ? err.message : "PDF መፍጠር አልተቻለም"),
+                  )
+                }
+              >
+                <Download className="h-4 w-4" /> መታወቂያ PDF አውርድ
+              </Button>
+            )}
           </div>
         </form>
 
