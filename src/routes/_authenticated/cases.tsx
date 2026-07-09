@@ -53,6 +53,7 @@ const CASE_DETAIL_PLACEHOLDER =
 function CasesPage() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [submitting, setSubmitting] = useState(false);
+  const sendToTelegram = useServerFn(sendCaseToTelegram);
 
   function upd<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -65,10 +66,16 @@ function CasesPage() {
       return;
     }
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 500));
-    setSubmitting(false);
-    setForm(EMPTY);
-    toast.success("ኬዝዎ ተመዝግቧል። እናመሰግናለን።");
+    try {
+      await sendToTelegram({ data: form });
+      setForm(EMPTY);
+      toast.success("ኬዝዎ ተልኳል። እናመሰግናለን።");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "ኬዙን መላክ አልተቻለም።";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
