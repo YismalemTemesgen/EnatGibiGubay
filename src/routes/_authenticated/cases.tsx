@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
-import { ArrowLeft, ShieldCheck, Send } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Send, Loader2 } from "lucide-react";
+import { sendCaseToTelegram } from "@/lib/telegram.functions";
 
 export const Route = createFileRoute("/_authenticated/cases")({
   head: () => ({ meta: [{ title: "ዕቅበተ እምነት — የኬዝ ዝርዝር መመዝገቢያ ፎርም" }] }),
@@ -51,6 +53,7 @@ const CASE_DETAIL_PLACEHOLDER =
 function CasesPage() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [submitting, setSubmitting] = useState(false);
+  const sendToTelegram = useServerFn(sendCaseToTelegram);
 
   function upd<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -63,10 +66,16 @@ function CasesPage() {
       return;
     }
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 500));
-    setSubmitting(false);
-    setForm(EMPTY);
-    toast.success("ኬዝዎ ተመዝግቧል። እናመሰግናለን።");
+    try {
+      await sendToTelegram({ data: form });
+      setForm(EMPTY);
+      toast.success("ኬዝዎ ተልኳል። እናመሰግናለን።");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "ኬዙን መላክ አልተቻለም።";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -202,8 +211,12 @@ function CasesPage() {
               </Link>
             </Button>
             <Button type="submit" disabled={submitting} size="lg">
-              <Send className="h-4 w-4" />
-              {submitting ? "እየተመዘገበ..." : "አስገባ"}
+              {submitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+              {submitting ? "እየተላከ..." : "አስገባ"}
             </Button>
           </div>
         </form>
