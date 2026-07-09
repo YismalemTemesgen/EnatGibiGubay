@@ -13,6 +13,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutIndexRouteImport } from './routes/about.index'
 import { Route as AboutUniversityRouteImport } from './routes/about.university'
 import { Route as AboutGibiGubayeRouteImport } from './routes/about.gibi-gubaye'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AboutRoute,
 } as any)
 const AboutUniversityRoute = AboutUniversityRouteImport.update({
   id: '/university',
@@ -137,12 +143,12 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
   '/about/university': typeof AboutUniversityRoute
+  '/about/': typeof AboutIndexRoute
   '/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
   '/departments/': typeof AuthenticatedDepartmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRouteWithChildren
   '/auth': typeof AuthRoute
   '/cases': typeof AuthenticatedCasesRoute
   '/donate': typeof AuthenticatedDonateRoute
@@ -155,6 +161,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
   '/about/university': typeof AboutUniversityRoute
+  '/about': typeof AboutIndexRoute
   '/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
   '/departments': typeof AuthenticatedDepartmentsIndexRoute
 }
@@ -176,6 +183,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/about/gibi-gubaye': typeof AboutGibiGubayeRoute
   '/about/university': typeof AboutUniversityRoute
+  '/about/': typeof AboutIndexRoute
   '/_authenticated/departments/$slug': typeof AuthenticatedDepartmentsSlugRoute
   '/_authenticated/departments/': typeof AuthenticatedDepartmentsIndexRoute
 }
@@ -197,12 +205,12 @@ export interface FileRouteTypes {
     | '/settings'
     | '/about/gibi-gubaye'
     | '/about/university'
+    | '/about/'
     | '/departments/$slug'
     | '/departments/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/auth'
     | '/cases'
     | '/donate'
@@ -215,6 +223,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/about/gibi-gubaye'
     | '/about/university'
+    | '/about'
     | '/departments/$slug'
     | '/departments'
   id:
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/about/gibi-gubaye'
     | '/about/university'
+    | '/about/'
     | '/_authenticated/departments/$slug'
     | '/_authenticated/departments/'
   fileRoutesById: FileRoutesById
@@ -275,6 +285,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/about/': {
+      id: '/about/'
+      path: '/'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof AboutRoute
     }
     '/about/university': {
       id: '/about/university'
@@ -425,11 +442,13 @@ const AuthenticatedRouteRouteWithChildren =
 interface AboutRouteChildren {
   AboutGibiGubayeRoute: typeof AboutGibiGubayeRoute
   AboutUniversityRoute: typeof AboutUniversityRoute
+  AboutIndexRoute: typeof AboutIndexRoute
 }
 
 const AboutRouteChildren: AboutRouteChildren = {
   AboutGibiGubayeRoute: AboutGibiGubayeRoute,
   AboutUniversityRoute: AboutUniversityRoute,
+  AboutIndexRoute: AboutIndexRoute,
 }
 
 const AboutRouteWithChildren = AboutRoute._addFileChildren(AboutRouteChildren)
@@ -443,3 +462,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
