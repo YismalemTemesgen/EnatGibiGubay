@@ -229,10 +229,30 @@ function RegisterPage() {
               rows={3}
             />
           </div>
-          <div className="sm:col-span-2 flex gap-2">
+          <div className="sm:col-span-2 flex flex-wrap gap-2">
             <Button type="submit" disabled={saving}>
               {saving ? "..." : existingId ? "አስተካክል" : "መዝግብ"}
             </Button>
+            {existingId && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() =>
+                  generateIdCardPdf({
+                    id: existingId,
+                    full_name: form.full_name,
+                    department: form.department,
+                    academic_year: form.academic_year,
+                    baptism_name: form.baptism_name,
+                    phone: form.phone,
+                  }).catch((err) =>
+                    toast.error(err instanceof Error ? err.message : "PDF መፍጠር አልተቻለም"),
+                  )
+                }
+              >
+                <Download className="h-4 w-4" /> መታወቂያ PDF አውርድ
+              </Button>
+            )}
           </div>
         </form>
 
